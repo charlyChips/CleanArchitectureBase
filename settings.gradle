@@ -1,0 +1,8 @@
+include ':presentation'
+include ':cache'
+include ':core'
+include ':remote'
+include ':data'
+include ':domain'
+include ':app'
+rootProject.name = "CleanArchitectureBase"
