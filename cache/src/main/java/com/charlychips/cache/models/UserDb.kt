@@ -11,10 +11,10 @@ data class UserDb(
     var name: String,
     var username: String,
     var email: String,
-    @Embedded
+    @Embedded(prefix = "address_")
     var address: AddressDb,
     var phone: String,
     var website: String,
-    @Embedded
+    @Embedded(prefix = "company_")
     var company: CompanyDb
 )

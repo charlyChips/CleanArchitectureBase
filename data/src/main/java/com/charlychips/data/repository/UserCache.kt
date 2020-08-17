@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Single
 import java.util.*
 
 interface UserCache {
+    fun saveUsersDb(list: List<UserEntity>)
     fun saveUsers(list: List<UserEntity>): Completable
     fun clearUsers(): Completable
     fun getUsers(): Single<List<UserEntity>>

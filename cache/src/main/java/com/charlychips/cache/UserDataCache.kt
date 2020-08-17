@@ -7,7 +7,6 @@ import com.charlychips.cache.models.UserDb
 import com.charlychips.core.Transform
 import com.charlychips.data.models.UserEntity
 import com.charlychips.data.repository.UserCache
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import java.util.*
@@ -19,24 +18,31 @@ class UserDataCache(
     private val userDbMapper: Transform<UserEntity, UserDb>,
     private val userEntityMapper: Transform<UserDb, UserEntity>
 ) : UserCache {
+    override fun saveUsersDb(list: List<UserEntity>) {
+        db.userDao().insertAll(userDbMapper.transform(list))
+    }
+
     override fun saveUsers(list: List<UserEntity>): Completable {
-        return RxJavaBridge.toV3Completable(
-            db.userDao()
-                .insertAll(list.map { userDbMapper.transform(it) })
-        )
+        return Completable.create {
+            saveUsersDb(list)
+            it.onComplete()
+        }
     }
 
     override fun clearUsers(): Completable {
-        return RxJavaBridge.toV3Completable(
+        return Completable.create {
             db.userDao().deleteAll()
-        )
+            it.onComplete()
+        }
     }
 
     override fun getUsers(): Single<List<UserEntity>> {
-        return RxJavaBridge.toV3Single(
-            db.userDao().findAll()
-                .map { userEntityMapper.transform(it) }
-        )
+        return Single.create<List<UserDb>> {
+            val users = db.userDao().findAll()
+            it.onSuccess(users)
+        }.map {
+            userEntityMapper.transform(it)
+        }
     }
 
     override fun setLastUpdate(date: Date) {

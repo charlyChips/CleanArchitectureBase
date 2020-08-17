@@ -7,6 +7,6 @@ data class AddressDb (
     var suite: String,
     var city: String,
     var zipCode: String,
-    @Embedded
+    @Embedded(prefix = "geo")
     var geo: GeoDb
 )
