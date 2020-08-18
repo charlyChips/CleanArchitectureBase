@@ -3,10 +3,10 @@ package com.charlychips.data.source
 import com.charlychips.data.repository.UserCache
 import com.charlychips.data.repository.UserDataStore
 
-class UserCacheDataStoreFactory(
+class UserDataStoreFactory(
     private val userCache:UserCache,
-    private val userCacheDataStore: UserCacheDataStore,
-    private val userRemoteDataStore: UserRemoteDataStore
+    private val userCacheDataStore: UserDataStore,
+    private val userRemoteDataStore: UserDataStore
 ) {
 
     fun getDataStore():UserDataStore{

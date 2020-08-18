@@ -5,6 +5,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    testImplementation rootProject.ext.testDependencies.values()
+    //testImplementation "junit:junit:${jUnitVersion}"
+    //testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    //testImplementation "org.assertj:assertj-core:${assertJVersion}"
+
     implementation project(':domain')
     implementation project(':core')
 
